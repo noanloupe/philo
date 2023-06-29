@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:23:47 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 21:39:33 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 22:09:38 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	solo_death(t_philo *philo)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->mutex->death);
-		if (*philo->dead == YES)
+		if (*philo->dead == 1)
 			break ;
 		pthread_mutex_unlock(&philo->mutex->death);
 	}
@@ -31,7 +31,7 @@ void	print_action(t_philo *philo, char *str)
 
 	pthread_mutex_lock(&philo->mutex->print);
 	pthread_mutex_lock(&philo->mutex->death);
-	if (*philo->dead == YES && *str != 'd')
+	if (*philo->dead == 1 && *str != 'd')
 	{
 		pthread_mutex_unlock(&philo->mutex->death);
 		pthread_mutex_unlock(&philo->mutex->print);
@@ -41,7 +41,7 @@ void	print_action(t_philo *philo, char *str)
 	pthread_mutex_unlock(&philo->mutex->death);
 	checker = (time.tv_sec - philo->start.tv_sec) * 1000 \
 	+ (time.tv_usec - philo->start.tv_usec) / 1000;
-	printf("[%dms] %d %s\n", checker, philo->philo_id + 1, str);
+	printf("%d %d %s\n", checker, philo->philo_id + 1, str);
 	pthread_mutex_unlock(&philo->mutex->print);
 }
 
@@ -79,7 +79,7 @@ void	*routine(void *philo)
 	while (1)
 	{
 		pthread_mutex_lock(&tmp->mutex->death);
-		if (*tmp->dead == YES)
+		if (*tmp->dead == 1)
 			break ;
 		pthread_mutex_unlock(&tmp->mutex->death);
 		eating(tmp);

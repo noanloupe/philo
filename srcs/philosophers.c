@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:56:10 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 21:48:33 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 22:09:38 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	end_all(t_philo *philo, pthread_t *brain)
 	int		i;
 
 	pthread_mutex_lock(&philo->mutex->death);
-	*philo->dead = YES;
+	*philo->dead = 1;
 	pthread_mutex_unlock(&philo->mutex->death);
 	tmp = philo;
 	n_philo = tmp->data->n_philo;
@@ -58,20 +58,17 @@ int	launch_sim(t_philo *philo)
 {
 	pthread_t	brain;
 	t_philo		*tmp;
-	int			i;
-	int			n_philo;
 
 	tmp = philo;
-	i = -1;
-	n_philo = tmp->data->n_philo;
 	if (pthread_create(&brain, NULL, &supervising, philo))
 		return (end_all(philo, &brain));
-	while (++i < n_philo)
+	while (1)
 	{
 		if (pthread_create(&tmp->thread, NULL, &routine, tmp))
 			return (end_all(philo, &brain));
-		if (tmp->next)
-			tmp = tmp->next;
+		tmp = tmp->next;
+		if (tmp->philo_id == 0)
+			break ;
 	}
 	return (end_sim(&brain, philo));
 }

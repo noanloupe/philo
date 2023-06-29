@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:47:22 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 21:46:03 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 22:10:19 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_mutex
 
 enum	arguments_parsing_errors	{AC, NUMBER};
 enum	init_errors					{STRUCT, OVER, PRINT, DEATH, DATA, MUTEX, DEAD_M};
-enum	death						{NO, YES};
 
 /*** DEFINES ***/
 

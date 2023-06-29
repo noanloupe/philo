@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:14:33 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 21:33:04 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 22:09:38 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_dead(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->mutex->death);
-	if (*philo->dead == YES)
+	if (*philo->dead == 1)
 	{
 		pthread_mutex_unlock(&philo->mutex->death);
 		return (1);
@@ -36,7 +36,7 @@ int	death_check(t_philo *philo, int base_time)
 	if (checker - philo->last_meal > philo->data->time_to_die)
 	{
 		pthread_mutex_lock(&philo->mutex->death);
-		*philo->dead = YES;
+		*philo->dead = 1;
 		pthread_mutex_unlock(&philo->mutex->death);
 		return (1);
 	}
@@ -66,7 +66,7 @@ int	meals_check(t_philo *philo)
 	if (valid == 1)
 		return (0);
 	pthread_mutex_lock(&philo->mutex->death);
-	*philo->dead = YES;
+	*philo->dead = 1;
 	pthread_mutex_unlock(&philo->mutex->death);
 	return (1);
 }
@@ -90,7 +90,7 @@ void	*supervising(void *philo)
 			tmp = tmp->next;
 	}
 	pthread_mutex_lock(&tmp->mutex->death);
-	if (*tmp->dead == YES)
+	if (*tmp->dead == 1)
 	{
 		pthread_mutex_unlock(&tmp->mutex->death);
 		print_action(philo, DEAD);

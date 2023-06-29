@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:55:06 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 21:48:00 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 22:10:16 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	set_dead(int **dead)
 	*dead = malloc(sizeof(int));
 	if (!*dead)
 		return (1);
-	**dead = NO;
+	**dead = 0;
 	return (0);
 }
 
@@ -67,8 +67,8 @@ int	init_philo(t_philo **philo, t_data *data, t_mutex *mutex)
 	gettimeofday(&start, NULL);
 	if (set_dead(&dead))
 		return (init_data_error(DEAD_M, data, mutex));
-	i = 0;
-	while (i < data->n_philo)
+	i = -1;
+	while (++i < data->n_philo)
 	{
 		new = create_philo(i, data, mutex, dead);
 		if (!new)
@@ -80,7 +80,6 @@ int	init_philo(t_philo **philo, t_data *data, t_mutex *mutex)
 		new->start.tv_sec = start.tv_sec;		
 		new->start.tv_usec = start.tv_usec;
 		lst_add_back(philo, new);
-		i++;
 	}
 	if (data->n_philo > 1)
 		new->next = *philo;
