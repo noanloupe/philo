@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:55:06 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 22:10:16 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 23:34:04 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	lst_add_back(t_philo **philo, t_philo *new)
 	t_philo	*tmp;
 
 	if (!new)
-		return;
+		return ;
 	if (!*philo)
 	{
 		*philo = new;
-		return;
+		return ;
 	}
 	tmp = *philo;
 	while (tmp->next)
@@ -66,7 +66,7 @@ int	init_philo(t_philo **philo, t_data *data, t_mutex *mutex)
 
 	gettimeofday(&start, NULL);
 	if (set_dead(&dead))
-		return (init_data_error(DEAD_M, data, mutex));
+		return (init_data_error(e_dead, data, mutex));
 	i = -1;
 	while (++i < data->n_philo)
 	{
@@ -77,7 +77,7 @@ int	init_philo(t_philo **philo, t_data *data, t_mutex *mutex)
 			free_philo(philo, data, mutex);
 			return (1);
 		}
-		new->start.tv_sec = start.tv_sec;		
+		new->start.tv_sec = start.tv_sec;
 		new->start.tv_usec = start.tv_usec;
 		lst_add_back(philo, new);
 	}
@@ -86,7 +86,7 @@ int	init_philo(t_philo **philo, t_data *data, t_mutex *mutex)
 	return (0);
 }
 
-int init_structs(int ac, char **av, t_philo **philo)
+int	init_structs(int ac, char **av, t_philo **philo)
 {
 	t_data	*data;
 	t_mutex	*mutex;

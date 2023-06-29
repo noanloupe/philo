@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:56:10 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 22:09:38 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 23:35:58 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int	launch_sim(t_philo *philo)
 	{
 		if (pthread_create(&tmp->thread, NULL, &routine, tmp))
 			return (end_all(philo, &brain));
-		tmp = tmp->next;
+		if (tmp->next)
+			tmp = tmp->next;
 		if (tmp->philo_id == 0)
 			break ;
 	}

@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 13:32:17 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 21:49:07 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 23:33:11 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_philo(t_philo **philo, t_data *data, t_mutex *mutex)
 {
 	t_philo	*tmp;
 	int		i;
-	
+
 	pthread_mutex_destroy(&mutex->print);
 	pthread_mutex_destroy(&mutex->death);
 	free((*philo)->dead);

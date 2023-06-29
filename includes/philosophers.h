@@ -6,18 +6,18 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:47:22 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 23:15:55 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 23:31:53 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/time.h>
+# include <pthread.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <sys/time.h>
 
 /*** STRUCT ***/
 
@@ -52,30 +52,30 @@ typedef struct s_mutex
 
 /*** ENUMS ***/
 
-enum	arguments_parsing_errors	{AC, NUMBER};
-enum	init_errors					{STRUCT, OVER, PRINT, DEATH, DATA, MUTEX, DEAD_M};
+enum	e_arguments_parsing_errors	{ac, number};
+enum	e_init_errors	{e_struct, over, print, death, data, e_mutex, e_dead};
 
 /*** DEFINES ***/
 
-# define	FORK	"has taken a fork"
-# define	EAT		"is eating"
-# define	DEAD	"died"
-# define	SLEEP	"is sleeping"
-# define	THINK	"is thinking"
+# define FORK	"has taken a fork"
+# define EAT	"is eating"
+# define DEAD	"died"
+# define SLEEP	"is sleeping"
+# define THINK	"is thinking"
 
 /*** FUNCTIONS ***/
 
 /* ~PARSING~ */
 
-int	parse_arguments(int ac, char **av);
+int		parse_arguments(int ac, char **av);
 
 /* ~STRUCT INIT~ */
 
-int	get_number(char	*str, int *error);
-int	init_data(int ac, char **av, t_data	**data);
-int	init_data_error(int mode, t_data *data, t_mutex *mutex);
-int init_mutex(t_mutex **mutex, t_data *data);
-int init_structs(int ac, char **av, t_philo **philo);
+int		get_number(char	*str, int *error);
+int		init_data(int ac, char **av, t_data	**data);
+int		init_data_error(int mode, t_data *data, t_mutex *mutex);
+int		init_mutex(t_mutex **mutex, t_data *data);
+int		init_structs(int ac, char **av, t_philo **philo);
 
 /* ~PROGRAM~ */
 

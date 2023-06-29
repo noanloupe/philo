@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:14:33 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 22:09:38 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 23:32:47 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_dead(t_philo *philo)
 int	death_check(t_philo *philo, int base_time)
 {
 	struct timeval	time;
-	int 			checker;
+	int				checker;
 
 	gettimeofday(&time, NULL);
 	checker = time.tv_sec * 1000 + time.tv_usec / 1000;
@@ -74,7 +74,7 @@ int	meals_check(t_philo *philo)
 void	*supervising(void *philo)
 {
 	t_philo		*tmp;
-	int	base_time;
+	int			base_time;
 
 	tmp = (t_philo *)philo;
 	base_time = tmp->start.tv_sec * 1000 + tmp->start.tv_usec / 1000;
@@ -85,7 +85,7 @@ void	*supervising(void *philo)
 		if (death_check(tmp, base_time))
 			break ;
 		if (meals_check(tmp))
-			return (NULL);	
+			return (NULL);
 		if (tmp->next)
 			tmp = tmp->next;
 	}

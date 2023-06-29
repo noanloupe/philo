@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 20:45:28 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 21:34:00 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 23:34:19 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	get_number(char	*str, int *error)
 	int	n;
 	int	prev;
 	int	i;
-	
+
 	n = 0;
 	i = 0;
 	while (str[i])
@@ -33,12 +33,12 @@ int	get_number(char	*str, int *error)
 
 void	error_free_mutex(int mode, t_mutex *mutex)
 {
-	if (mode == DEATH)
+	if (mode == death)
 	{
 		pthread_mutex_destroy(&mutex->print);
 		printf("Death mutex failed\n");
 	}
-	else if (mode == DEAD_M)
+	else if (mode == e_dead)
 	{
 		pthread_mutex_destroy(&mutex->print);
 		pthread_mutex_destroy(&mutex->death);
@@ -49,13 +49,13 @@ void	error_free_mutex(int mode, t_mutex *mutex)
 
 int	init_data_error(int mode, t_data *data, t_mutex *mutex)
 {
-	if (mode == STRUCT)
+	if (mode == e_struct)
 		printf("Data malloc failed\n");
-	else 
+	else
 	{
-		if (mode == OVER)
+		if (mode == over)
 			printf("Argument is too big\n");
-		else if (mode == MUTEX)
+		else if (mode == e_mutex)
 			printf("Mutex malloc failed\n");
 		else
 			error_free_mutex(mode, mutex);
