@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:23:47 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 22:09:38 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 23:17:44 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	print_action(t_philo *philo, char *str)
 		pthread_mutex_unlock(&philo->mutex->print);
 		return ;
 	}
-	gettimeofday(&time, NULL);
 	pthread_mutex_unlock(&philo->mutex->death);
+	gettimeofday(&time, NULL);
 	checker = (time.tv_sec - philo->start.tv_sec) * 1000 \
 	+ (time.tv_usec - philo->start.tv_usec) / 1000;
-	printf("%d %d %s\n", checker, philo->philo_id + 1, str);
+	printf("[%d ms] %d %s\n", checker, philo->philo_id + 1, str);
 	pthread_mutex_unlock(&philo->mutex->print);
 }
 
