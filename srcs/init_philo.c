@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:55:06 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 19:07:59 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 21:48:00 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	lst_add_back(t_philo **philo, t_philo *new)
 	tmp->next = new;
 }
 
-t_philo	*create_philo(int i, t_data *data, int *dead)
+t_philo	*create_philo(int i, t_data *data, t_mutex *mutex, int *dead)
 {
 	t_philo	*new;
 
@@ -43,6 +43,7 @@ t_philo	*create_philo(int i, t_data *data, int *dead)
 	if (pthread_mutex_init(&new->fork, NULL))
 		return (NULL);
 	new->data = data;
+	new->mutex = mutex;
 	new->next = NULL;
 	return (new);
 }
@@ -56,7 +57,7 @@ int	set_dead(int **dead)
 	return (0);
 }
 
-int	init_philo(t_philo **philo, t_data *data)
+int	init_philo(t_philo **philo, t_data *data, t_mutex *mutex)
 {
 	t_philo			*new;
 	struct timeval	start;
@@ -65,15 +66,15 @@ int	init_philo(t_philo **philo, t_data *data)
 
 	gettimeofday(&start, NULL);
 	if (set_dead(&dead))
-		return (1); //free all
+		return (init_data_error(DEAD_M, data, mutex));
 	i = 0;
 	while (i < data->n_philo)
 	{
-		new = create_philo(i, data, dead);
+		new = create_philo(i, data, mutex, dead);
 		if (!new)
 		{
 			data->n_philo = i - 1;
-			free_philo(philo, data);
+			free_philo(philo, data, mutex);
 			return (1);
 		}
 		new->start.tv_sec = start.tv_sec;		
@@ -89,12 +90,15 @@ int	init_philo(t_philo **philo, t_data *data)
 int init_structs(int ac, char **av, t_philo **philo)
 {
 	t_data	*data;
+	t_mutex	*mutex;
 
 	data = NULL;
+	mutex = NULL;
 	if (init_data(ac, av, &data))
 		return (1);
-	//print_data(data);
-	if (init_philo(philo, data))
+	if (init_mutex(&mutex, data))
+		return (1);
+	if (init_philo(philo, data, mutex))
 		return (1);
 	return (0);
 }

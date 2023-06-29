@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:56:10 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 18:22:15 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 21:48:33 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	end_all(t_philo *philo, pthread_t *brain)
 	int		n_philo;
 	int		i;
 
-	pthread_mutex_lock(&philo->data->death);
+	pthread_mutex_lock(&philo->mutex->death);
 	*philo->dead = YES;
-	pthread_mutex_unlock(&philo->data->death);
+	pthread_mutex_unlock(&philo->mutex->death);
 	tmp = philo;
 	n_philo = tmp->data->n_philo;
 	i = 0;
@@ -31,8 +31,8 @@ int	end_all(t_philo *philo, pthread_t *brain)
 		i++;
 	}
 	pthread_join(*brain, NULL);
-	pthread_mutex_lock(&philo->data->print);
-	free_philo(&philo, philo->data);
+	pthread_mutex_lock(&philo->mutex->print);
+	free_philo(&philo, philo->data, philo->mutex);
 	return (1);
 }
 
@@ -42,13 +42,12 @@ int	end_sim(pthread_t *brain, t_philo *philo)
 	int	i;
 
 	n_philo = philo->data->n_philo;
-	i = 0;
-	while (i < n_philo)
+	i = -1;
+	while (++i < n_philo)
 	{
 		if (pthread_join(philo->thread, NULL))
 			return (end_all(philo, brain));
 		philo = philo->next;
-		i++;
 	}
 	if (pthread_join(*brain, NULL))
 		return (end_all(philo, brain));
@@ -62,17 +61,17 @@ int	launch_sim(t_philo *philo)
 	int			i;
 	int			n_philo;
 
+	tmp = philo;
+	i = -1;
+	n_philo = tmp->data->n_philo;
 	if (pthread_create(&brain, NULL, &supervising, philo))
 		return (end_all(philo, &brain));
-	tmp = philo;
-	i = 0;
-	n_philo = tmp->data->n_philo;
-	while (i < n_philo)
+	while (++i < n_philo)
 	{
 		if (pthread_create(&tmp->thread, NULL, &routine, tmp))
 			return (end_all(philo, &brain));
-		tmp = tmp->next;
-		i++;
+		if (tmp->next)
+			tmp = tmp->next;
 	}
 	return (end_sim(&brain, philo));
 }

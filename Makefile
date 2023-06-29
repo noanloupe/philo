@@ -5,6 +5,7 @@ FILES		=	main.c\
 				free_philo.c\
 				init_data.c\
 				init_philo.c\
+				init_utils.c\
 				my_usleep.c\
 				parsing.c\
 				philosophers.c\

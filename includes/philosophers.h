@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:47:22 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 18:32:08 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/29 21:46:03 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_philo
 	pthread_mutex_t	fork;
 	struct timeval	start;
 	struct s_data	*data;
+	struct s_mutex	*mutex;
 	struct s_philo	*next;
 }	t_philo;
 
@@ -41,14 +42,18 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				n_meals;
+}	t_data;
+
+typedef struct s_mutex
+{
 	pthread_mutex_t	print;
 	pthread_mutex_t	death;
-}	t_data;
+}	t_mutex;
 
 /*** ENUMS ***/
 
 enum	arguments_parsing_errors	{AC, NUMBER};
-enum	init_data_errors			{STRUCT, OVER, PRINT, DEATH};
+enum	init_errors					{STRUCT, OVER, PRINT, DEATH, DATA, MUTEX, DEAD_M};
 enum	death						{NO, YES};
 
 /*** DEFINES ***/
@@ -67,7 +72,10 @@ int	parse_arguments(int ac, char **av);
 
 /* ~STRUCT INIT~ */
 
+int	get_number(char	*str, int *error);
 int	init_data(int ac, char **av, t_data	**data);
+int	init_data_error(int mode, t_data *data, t_mutex *mutex);
+int init_mutex(t_mutex **mutex, t_data *data);
 int init_structs(int ac, char **av, t_philo **philo);
 
 /* ~PROGRAM~ */
@@ -80,11 +88,6 @@ void	*supervising(void *philo);
 
 /* ~FREE~ */
 
-void	free_philo(t_philo **philo, t_data *data);
-
-/* ~TMP~ */
-
-void	print_data(t_data *data);
-void	print_philos(t_philo **philo);
+void	free_philo(t_philo **philo, t_data *data, t_mutex *mutex);
 
 #endif
