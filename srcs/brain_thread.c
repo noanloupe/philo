@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:14:33 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 23:32:47 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/07/10 15:42:17 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_dead(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->mutex->death);
-	if (*philo->dead == 1)
+	if (*philo->dead)
 	{
 		pthread_mutex_unlock(&philo->mutex->death);
 		return (1);
@@ -90,10 +90,10 @@ void	*supervising(void *philo)
 			tmp = tmp->next;
 	}
 	pthread_mutex_lock(&tmp->mutex->death);
-	if (*tmp->dead == 1)
+	if (*tmp->dead != 0)
 	{
 		pthread_mutex_unlock(&tmp->mutex->death);
-		print_action(philo, DEAD);
+		print_action(tmp, DEAD);
 	}
 	pthread_mutex_unlock(&tmp->mutex->death);
 	return (NULL);
