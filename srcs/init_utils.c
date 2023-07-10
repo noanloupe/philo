@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 20:45:28 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 23:34:19 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/07/10 13:01:36 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	get_number(char	*str, int *error)
 			*error = 1;
 		i++;
 	}
+	if (n == 0)
+		*error = 1;
 	return (n);
 }
 
@@ -54,7 +56,7 @@ int	init_data_error(int mode, t_data *data, t_mutex *mutex)
 	else
 	{
 		if (mode == over)
-			printf("Argument is too big\n");
+			printf("Argument is zero or too big\n");
 		else if (mode == e_mutex)
 			printf("Mutex malloc failed\n");
 		else
