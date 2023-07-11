@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:14:33 by noloupe           #+#    #+#             */
-/*   Updated: 2023/07/10 15:42:17 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/07/10 18:59:04 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,17 @@ int	meals_check(t_philo *philo)
 
 void	*supervising(void *philo)
 {
-	t_philo		*tmp;
-	int			base_time;
+	t_philo	*tmp;
+	int		base_time;
 
 	tmp = (t_philo *)philo;
 	base_time = tmp->start.tv_sec * 1000 + tmp->start.tv_usec / 1000;
 	while (1)
 	{
-		if (is_dead(tmp))
+		if (is_dead(tmp) || meals_check(tmp))
 			return (NULL);
 		if (death_check(tmp, base_time))
 			break ;
-		if (meals_check(tmp))
-			return (NULL);
 		if (tmp->next)
 			tmp = tmp->next;
 	}

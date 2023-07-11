@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:47:22 by noloupe           #+#    #+#             */
-/*   Updated: 2023/07/10 14:49:40 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/07/10 19:01:12 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <limits.h>
 
 /*** STRUCT ***/
 
@@ -80,7 +81,7 @@ int		init_structs(int ac, char **av, t_philo **philo);
 /* ~PROGRAM~ */
 
 int		launch_sim(t_philo *philo);
-void	my_usleep(int time_to_sleep);
+void	my_usleep(int time_to_sleep, t_philo *philo);
 void	print_action(t_philo *philo, char *str);
 void	*routine(void *philo);
 void	*supervising(void *philo);

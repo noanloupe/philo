@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:23:47 by noloupe           #+#    #+#             */
-/*   Updated: 2023/07/10 16:11:17 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/07/10 19:02:32 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	eating(t_philo *philo)
 		philo->last_meal = checker;
 		print_action(philo, EAT);
 		++philo->meals;
-		my_usleep(philo->data->time_to_eat);
+		my_usleep(philo->data->time_to_eat, philo);
 		pthread_mutex_unlock(&philo->next->fork);
 	}
 	else
@@ -75,7 +75,7 @@ void	*routine(void *philo)
 
 	tmp = (t_philo *)philo;
 	if (tmp->philo_id % 2)
-		my_usleep(tmp->data->time_to_eat / 2);
+		my_usleep(tmp->data->time_to_eat / 2, tmp);
 	while (1)
 	{
 		pthread_mutex_lock(&tmp->mutex->death);
@@ -84,7 +84,7 @@ void	*routine(void *philo)
 		pthread_mutex_unlock(&tmp->mutex->death);
 		eating(tmp);
 		print_action(tmp, SLEEP);
-		my_usleep(tmp->data->time_to_sleep);
+		my_usleep(tmp->data->time_to_sleep, tmp);
 		print_action(tmp, THINK);
 	}
 	pthread_mutex_unlock(&tmp->mutex->death);
