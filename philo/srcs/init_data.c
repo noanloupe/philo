@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:44:45 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/29 23:33:23 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/07/17 12:57:59 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	init_data(int ac, char **av, t_data	**data)
 
 	error = 0;
 	*data = malloc(sizeof(t_data));
-	if (!data)
+	if (!*data)
 		return (init_data_error(e_struct, *data, NULL));
 	(*data)->n_philo = get_number(av[1], &error);
 	(*data)->time_to_die = get_number(av[2], &error);

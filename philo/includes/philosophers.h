@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:47:22 by noloupe           #+#    #+#             */
-/*   Updated: 2023/07/10 19:01:12 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/07/17 12:59:41 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ typedef struct s_mutex
 /*** ENUMS ***/
 
 enum	e_arguments_parsing_errors	{ac, number};
-enum	e_init_errors	{e_struct, over, print, death, data, e_mutex, e_dead};
+enum	e_init_errors	{e_struct, over, print, death, \
+		data, e_mutex, e_dead, node, e_else};
 
 /*** DEFINES ***/
 
@@ -88,6 +89,6 @@ void	*supervising(void *philo);
 
 /* ~FREE~ */
 
-void	free_philo(t_philo **philo, t_data *data, t_mutex *mutex);
+int		free_philo(t_philo **philo, t_data *data, t_mutex *mutex, int mode);
 
 #endif

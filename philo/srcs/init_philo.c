@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:55:06 by noloupe           #+#    #+#             */
-/*   Updated: 2023/07/10 19:01:08 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/07/17 12:58:43 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ int	init_philo(t_philo **philo, t_data *data, t_mutex *mutex)
 		new = create_philo(i, data, mutex, dead);
 		if (!new)
 		{
+			free(dead);
 			data->n_philo = i - 1;
-			free_philo(philo, data, mutex);
-			return (1);
+			return (free_philo(philo, data, mutex, node));
 		}
 		new->start.tv_sec = start.tv_sec;
 		new->start.tv_usec = start.tv_usec;

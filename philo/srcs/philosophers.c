@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:56:10 by noloupe           #+#    #+#             */
-/*   Updated: 2023/07/10 15:42:17 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/07/17 12:56:29 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	end_all(t_philo *philo, pthread_t *brain)
 	}
 	pthread_join(*brain, NULL);
 	pthread_mutex_lock(&philo->mutex->print);
-	free_philo(&philo, philo->data, philo->mutex);
+	free_philo(&philo, philo->data, philo->mutex, e_else);
 	return (1);
 }
 
